@@ -6,7 +6,7 @@
 // outgoing
 const outgoingQueue = new Worker(new URL('./outgoingQueue.ts', import.meta.url), { type: 'module' });
 const messageSender = new Worker(new URL('./messageSender.ts', import.meta.url), { type: 'module' });
-const acknowledged = new Worker(new URL('./acknowledged.ts', import.meta.url), { type: 'module' });
+const acknowledgeListener = new Worker(new URL('./acknowledgeListener.ts', import.meta.url), { type: 'module' });
 
 // incoming
 const messageListener = new Worker(new URL('./messageListener.ts', import.meta.url), { type: 'module' });
