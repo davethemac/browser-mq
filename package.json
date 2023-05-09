@@ -1,0 +1,35 @@
+{
+  "name": "mq",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "client": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "clean": "rimraf ./build",
+    "build:server": "npm run clean && tsc --project tsconfig.server.json",
+    "start:wtf": "node src/server",
+    "local": "cross-env NODE_OPTIONS='--trace-warnings' ts-node --project tsconfig.server.json src/server",
+    "server": "nodemon --watch src/server -e ts,json --exec \"npm run local\"",
+    "start": "concurrently \"npm:server\" \"npm:client\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/uuid": "^9.0.1",
+    "@types/ws": "^8.5.4",
+    "concurrently": "^8.0.1",
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.22",
+    "rimraf": "^5.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.2"
+  },
+  "dependencies": {
+    "uuid": "^9.0.0",
+    "ws": "^8.13.0"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.7"
+  }
+}
