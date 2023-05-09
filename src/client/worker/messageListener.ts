@@ -7,6 +7,7 @@ export type ReceivedMessage = {
 
 const dbName = 'incommingQueue';
 const schemaVersion = 1;
+const objectStoreName = 'messages';
 
 // establishes a (SSE) connection with the server
 // on message received
@@ -21,11 +22,24 @@ evtSource.onmessage = function (ev: MessageEvent<string>) {
     // Save the IDBDatabase interface
     const db: IDBDatabase = (dbEvent.target! as IDBOpenDBRequest).result;
 
-    addMessage(db, {
-      received: Date.now(),
-      uuid,
-      acknowledged: false,
-      body
-    });
+    const transaction = db.transaction([objectStoreName]);
+    const objectStore = transaction.objectStore(objectStoreName);
+    const request = objectStore.get(uuid);
+
+    request.onsuccess = function (ev: Event) {
+      const result = (ev.target as IDBRequest).result
+
+      if (result == undefined) {
+        addMessage(db, {
+          received: Date.now(),
+          uuid,
+          acknowledged: false,
+          body
+        });
+      }
+    };
+    request.onerror = function (ev: Event) {
+      console.log('error retrieving', (ev.target as IDBRequest).error);
+    }
   };
 }
