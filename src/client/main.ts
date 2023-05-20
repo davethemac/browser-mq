@@ -24,5 +24,5 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 setupCounter(document.querySelector<HTMLButtonElement>('#counter')!);
 
 const ampq = new Worker(new URL('./worker/ampq.ts', import.meta.url));
-
+debugger;
 ampq.postMessage('Hello Dave');

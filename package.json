@@ -9,7 +9,7 @@
     "clean": "rimraf ./build",
     "build:server": "npm run clean && tsc --project tsconfig.server.json",
     "start:wtf": "node src/server",
-    "local": "cross-env NODE_OPTIONS='--trace-warnings' ts-node --project tsconfig.server.json src/server",
+    "local": "cross-env NODE_OPTIONS='--inspect' ts-node --project tsconfig.server.json src/server",
     "server": "nodemon --watch src/server -e ts,json --exec \"npm run local\"",
     "start": "concurrently \"npm:server\" \"npm:client\""
   },

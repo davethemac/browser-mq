@@ -65,6 +65,9 @@ export function setMessageAcknowledged(key: string) {
   if (sendStore[key] != undefined) {
     delete sendStore[key];
   }
+  console.log('key', key);
+  console.log('ackSendStore', ackSendStore);
+  console.log('sendStore', sendStore);
 }
 
 function getRandomIntInclusive(min: number, max: number) {
@@ -74,7 +77,10 @@ function getRandomIntInclusive(min: number, max: number) {
 }
 
 export function maybeSendMessage() {
-  if (getRandomIntInclusive(1, 6) == 6) {
-    storeMessage('Hi David');
-  }
+  // if (Object.keys(sendStore).length == 0) {
+  //   if (getRandomIntInclusive(1, 6) == 6) {
+  //     console.log('storing message');
+  //     storeMessage('Hi David');
+  //   }
+  // }
 }

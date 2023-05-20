@@ -8,15 +8,6 @@ type IndexType = {
   }
 };
 
-export type QueuedMessage = {
-  received: number
-  uuid: string;
-  lastSent?: number;
-  tries?: number;
-  acknowledged: boolean;
-  body: {};
-}
-
 const objectStoreName = 'messages';
 const keyPath = 'uuid';
 const indexes: IndexType[] = [{ name: 'received', keyPath: 'received' }];

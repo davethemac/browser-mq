@@ -2,7 +2,7 @@ import https from 'https';
 import http2 from 'http2';
 import { WebSocketServer } from 'ws';
 import { readFileSync } from 'fs';
-import { ReceivedMessage, maybeSendMessage, messageReceived, setMessageAcknowledged } from './messages';
+import { ReceivedMessage, maybeSendMessage, messageReceived, setMessageAcknowledged, storeMessage } from './messages';
 import { acknowledge } from './acknowledge';
 import { publish } from './publish';
 
@@ -29,7 +29,9 @@ const http2Server = http2.createSecureServer({ key, cert }, (req, res) => {
 
 http2Server.listen(3000, () => {
   console.log("Http2 Server running on https://localhost:3000/");
-  setInterval(maybeSendMessage, 500);
+
+  storeMessage('Hi David');
+  // setInterval(maybeSendMessage, 500);
 });
 
 
@@ -51,11 +53,14 @@ wss.on('connection', function connection(ws) {
 
   ws.on('message', function message(data) {
     console.log('received: %s', data);
-    const message: ReceivedMessage = JSON.parse(data.toString('utf8'));
-    if (typeof message.body == 'string' && message.body == 'acknowledeged') {
-      setMessageAcknowledged(message.uuid);
-    } else {
-      messageReceived(message);
+    if (data ) {
+      const message: ReceivedMessage = JSON.parse(data.toString('utf8'));
+      console.log('message', message);
+      if (typeof message.body == 'string' && message.body == 'acknowledge') {
+        setMessageAcknowledged(message.uuid);
+      } else {
+        messageReceived(message);
+      }
     }
   });
 

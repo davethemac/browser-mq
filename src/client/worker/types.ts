@@ -1,18 +1,24 @@
-// // message passed from main script
-// // message passed to main script
 
-// // in both these cases we need something like 
-// { 
-//   // worker message name - send|recieve
-// }
+export type QueuedMessage = {
+  received: number
+  uuid: string;
+  lastSent?: number;
+  tries?: number;
+  acknowledged: boolean;
+  body: {};
+}
 
-// YAGNI
+export type ReceivedMessage = {
+  uuid: string;
+  received?: number
+  body: {} | string;
+}
 
-/*
-
-Type 'Http2SecureServer' is not assignable to type 'Server<...> | Server<...> | undefined'.
-  Type 'Http2SecureServer' is missing the following properties from type 
-  'Server<typeof IncomingMessage, typeof ServerResponse>': closeAllConnections, closeIdleConnections, maxHeadersCount, maxRequestsPerSocket, and 4 more.ts(2322)
-
-
-*/
+export type IndexType = {
+  name: string,
+  keyPath: string,
+  options?: {
+    unique?: boolean;
+    multiEntry?: boolean;
+  }
+};
